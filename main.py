@@ -14,5 +14,5 @@ if __name__ == '__main__':
     # time.sleep(1)
     # p.plcclose()
     p=IPCXML()
-    c=p.getsymbolvalue("IFAST_CY")
-    print(c)
+    p.getsymbolvalue("IFAST_CY")
+    
