@@ -139,4 +139,3 @@ class PLC:
             return recvdata[30]
     def plcreadhrword(self,beginaddr,num):
         pass
-

@@ -14,5 +14,5 @@ if __name__ == '__main__':
     # time.sleep(1)
     # p.plcclose()
     p=IPCXML()
-    p.getsymbolvalue("IFAST_CY")
-    
+    d=p.getsymbolvalue('IFAST_CY')
+    print(d.get('L4PdStep01').channelno)
