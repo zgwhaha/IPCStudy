@@ -16,7 +16,7 @@ class IPCXML:
 
     def __init__(self):
         self.logger = logging.getLogger('main.IPCXML')
-        pass
+
 
     def getsymbolvalue(self, plctype):
         tree = ET.parse("PLC1.xml")

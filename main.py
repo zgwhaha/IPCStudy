@@ -1,6 +1,7 @@
 from PLC import *
 from IPCXML import *
 import logging
+from SqlLiteDB import *
 
 
 
@@ -26,4 +27,9 @@ if __name__ == '__main__':
     p=IPCXML()
     d=p.getsymbolvalue('IFAST_CY')
     logger.info(d.get('L4PdStep01').symbolname)
-    pass
+    s=SqlLiteDB('IPC.db')
+    m=s.VerifyUser('zgw','123456')
+    if m:
+        logger.info('user passed')
+    else:
+        logger.info('user denied')
