@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+import logging
 
 class SymbolValue:
     __slots__=('symbolname', 'datatype', 'channelno', 'bitno', 'comment')
@@ -10,17 +11,19 @@ class SymbolValue:
         self.bitno = bitno
         self.comment = comment
 
+
 class IPCXML:
 
     def __init__(self):
+        self.logger = logging.getLogger('main.IPCXML')
         pass
 
     def getsymbolvalue(self, plctype):
         tree = ET.parse("PLC1.xml")
         root = tree.getroot()
-        print(root)
-        print(root.tag)
-        print(root.attrib)
+        self.logger.info(root)
+        self.logger.info(root.tag)
+        self.logger.info(root.attrib)
         d = {}
         for child in root:
             if(plctype == child.tag):

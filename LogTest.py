@@ -1,18 +1,21 @@
 import logging
 import threading
 import time
+
+
 def worker(arg):
     while not arg['stop']:
-        logging.debug('Hi from myfunc')
+        logging.warning('Hi from myfunc')
         time.sleep(0.5)
 def main():
     logging.basicConfig(level=logging.DEBUG, format='%(relativeCreated)6d %(threadName)s %')
+    logging.basicConfig(level=logging.NOTSET)
     info = {'stop': False}
     thread = threading.Thread(target=worker, args=(info,))
     thread.start()
 while True:
     try:
-        logging.debug('Hello from main')
+        logging.warning('Hello from main')
         time.sleep(0.75)
     except KeyboardInterrupt:
         info['stop'] = True
