@@ -1,6 +1,10 @@
 from PLC import *
 from IPCXML import *
+import logging
 
+
+def loginit():
+    pass
 
 if __name__ == '__main__':
     # p = PLC()
@@ -13,6 +17,7 @@ if __name__ == '__main__':
     # p.plcwritehrbit(0, 1, 1)
     # time.sleep(1)
     # p.plcclose()
-    p=IPCXML()
-    d=p.getsymbolvalue('IFAST_CY')
-    print(d.get('L4PdStep01').channelno)
+    # p=IPCXML()
+    # d=p.getsymbolvalue('IFAST_CY')
+    # print(d.get('L4PdStep01').channelno,d.get('L4PdStep01').symbolname)
+    pass
