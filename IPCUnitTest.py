@@ -13,7 +13,7 @@ class TESTIPCXML(unittest.TestCase):
             I=IPCXML()
             a = {}
             d = I.getsymbolvalue(plctype)
-            self.assertNotEqual(d, a,plctype+ " param error")
+            self.assertNotEqual(d, a, plctype+ " param error")
 
 class TESTPLC(unittest.TestCase):
     def test_Init(self):

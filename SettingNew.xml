@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" ?>
+<LIST>
+    <MASTER_SETTING>
+        <SNMPIP value="192.168.250.185" />
+        <SNMPPORT value="162" />
+        <TRACEPORT value="25000"/>
+    </MASTER_SETTING>
+    <AGENT_SETTING>
+    	  <AGENTIP value="192.168.250.185" />
+        <AGENTPORT value="161" />
+    </AGENT_SETTING>
+  <EQUIPMENTLIST>
+    <EQUIPMENT EQUIPMENTNO="1001" EQUIPMENTTYPE="IFAST" PLCINTERFACE="TCP">
+      <IPCLOCALIP IP="192.168.250.185" PORT="30000"/><!--本地socketIP-->
+      <PLC_SETTING> 
+        <!--出药PLC-->
+        <PLC NO="PLC_01" IP="192.168.250.1" PORT="9600" TYPE="IFAST_CY"/>
+        <PLC NO="PLC_02" IP="192.168.250.2" PORT="9600" TYPE="IFAST_CY"/>
+    	  <PLC NO="PLC_03" IP="192.168.250.3" PORT="9600" TYPE="IFAST_CY"/>
+    	  <PLC NO="PLC_04" IP="192.168.250.4" PORT="9600" TYPE="IFAST_CY"/>
+    	  <PLC NO="PLC_05" IP="192.168.250.5" PORT="9600" TYPE="IFAST_CY"/>
+    	  <PLC NO="PLC_06" IP="192.168.250.6" PORT="9600" TYPE="IFAST_CY"/>
+    	  <PLC NO="PLC_07" IP="192.168.250.7" PORT="9600" TYPE="IFAST_CY"/>
+    	  <PLC NO="PLC_08" IP="192.168.250.8" PORT="9600" TYPE="IFAST_CY"/>
+    	  <PLC NO="PLC_09" IP="192.168.250.9" PORT="9600" TYPE="IFAST_CY"/>
+        <!--运输提升PLC-->
+        <PLC NO="PLC_SSTS" IP="192.168.250.10" PORT="9600" TYPE="IFAST_TS"/>
+        <!--上药PLC-->
+        <PLC NO="PLC_SY" IP="192.168.250.11" PORT="9600" TYPE="IFAST_SY"/>
+      </PLC_SETTING>
+      <!--串口设置-->
+      <COMM_SETTING>
+        <SERIAL_COMM NO="LaserDM" PORT="6" BAUDRATE="115200" PARITY="0" BYTESIZE="8" STOPBIT="0"/><!--激光测距仪-->
+      </COMM_SETTING>
+    </EQUIPMENT>
+    <EQUIPMENT EQUIPMENTNO="1002" EQUIPMENTTYPE="IPACK_MZ_RS" PLCINTERFACE="RS485">
+      <!--门诊分包-->
+      <IPCLOCALIP IP="192.168.250.185" PORT="30001"/>
+      <!--本地socketIP-->
+      <PLC_SETTING>
+        <PLC NO="PLC_01" TYPE="IPACK_JXS" ID="1" PORT="6" BAUDRATE="19200" PARITY="0" BYTESIZE="8" STOPBIT="0"/>
+        <PLC NO="PLC_FB" TYPE="IPACK_FB" ID="2" PORT="2" BAUDRATE="19200" PARITY="0" BYTESIZE="8" STOPBIT="0"/>
+      </PLC_SETTING>
+      <COMM_SETTING>
+        <SERIAL_COMM NO="Printer" PORT="6" BAUDRATE="115200" PARITY="0" BYTESIZE="8" STOPBIT="0"/>
+        <!--打印机-->
+      </COMM_SETTING>
+    </EQUIPMENT>
+    <!--<EQUIPMENT EQUIPMENTNO="1003" EQUIPMENTTYPE="IPACK_ZY">--><!--住院分包--><!--
+      --><!--门诊分包--><!--
+      <IPCLOCALIP IP="192.168.250.185" PORT="30001"/>
+      --><!--本地socketIP--><!--
+      <PLC_SETTING>
+        --><!--机械手PLC--><!--
+        <PLC NO="PLC_01" IP="192.168.250.12" PORT="9600" TYPE="IPACK_JXS"/>
+        --><!--<PLC NO="PLC_02" IP="192.168.250.13" PORT="9600" TYPE="IPACK_JXS"/>
+        <PLC NO="PLC_03" IP="192.168.250.14" PORT="9600" TYPE="IPACK_JXS"/>--><!--
+        --><!--封包PLC--><!--
+        <PLC NO="PLC_FB" IP="192.168.250.15" PORT="9600" TYPE="IPACK_FD"/>
+      </PLC_SETTING>
+      --><!--串口设置--><!--
+      <COMM_SETTING>
+        <SERIAL_COMM NO="Printer" PORT="6" BAUDRATE="115200" PARITY="0" BYTESIZE="8" STOPBIT="0"/>
+        --><!--打印机--><!--
+      </COMM_SETTING>
+    </EQUIPMENT>-->
+    <EQUIPMENT EQUIPMENTNO="1100" EQUIPMENTTYPE="ITRANS" PLCINTERFACE="TCP">
+      <IPCLOCALIP IP="192.168.250.185" PORT="30002"/>
+      <!--本地socketIP-->
+      <PLC_SETTING>
+        <!--运输加导轨1PLC-->
+        <PLC NO="PLC_ITRANS1" IP="192.168.250.12" PORT="9600" TYPE="ITRANS_DG1"/>
+        <!--导轨2PLC-->
+        <PLC NO="PLC_ITRANS2" IP="192.168.250.13" PORT="9600" TYPE="ITRANS_DG2"/>
+      </PLC_SETTING>
+      <COMM_SETTING>
+        <SERIAL_COMM NO="Can" PORT="9" BAUDRATE="115200" PARITY="0" BYTESIZE="8" STOPBIT="0"/>
+      </COMM_SETTING>
+    </EQUIPMENT>
+  </EQUIPMENTLIST>  
+    <LOG_SETTING>
+    	<!--NOT_SET_LOG_LEVEL  (   -1) ：接受缺省的LogLevel，如果有父logger则继承它的LogLevel
+	        ALL_LOG_LEVEL      (    0) ：开放所有log信息输出
+	        TRACE_LOG_LEVEL    (    0) ：开放trace信息输出(即ALL_LOG_LEVEL)
+	        DEBUG_LOG_LEVEL    (10000) ：开放debug信息输出
+	        INFO_LOG_LEVEL     (20000) ：开放info信息输出
+	        WARN_LOG_LEVEL     (30000) ：开放warning信息输出
+	        ERROR_LOG_LEVEL    (40000) ：开放error信息输出
+	        FATAL_LOG_LEVEL    (50000) ：开放fatal信息输出
+	        OFF_LOG_LEVEL      (60000) ：关闭所有log信息输出-->
+	    <CONSOLELOG SWITCH="1" LEVEL="0"/>
+	    <FILELOG SWITCH="1" FILENAME="./log/test.log" LEVEL="0"/>
+	    <!--enum DailyRollingFileSchedule { MONTHLY, WEEKLY, DAILY,
+                                    TWICE_DAILY, HOURLY, MINUTELY};-->
+	    <DALIYFILELOG SWITCH="1" FILENAME="./log/test.log" LEVEL="0" FREQUENCY="5"/>
+    </LOG_SETTING>
+</LIST>

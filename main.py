@@ -25,12 +25,5 @@ if __name__ == '__main__':
     # time.sleep(1)
     # p.plcclose()
     p=IPCXML()
-    d=p.getsymbolvalue('IFAST_CY')
-    logger.info(d.get('L4PdStep01').symbolname)
-
-    s=SqlLiteDB('IPC.db')
-    m=s.VerifyUser('zgw','123456')
-    if m:
-        logger.info('user passed')
-    else:
-        logger.info('user denied')
+    m=p.getequipmentinfo()
+    print('success')
