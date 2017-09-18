@@ -13,6 +13,7 @@ pool = ThreadPoolExecutor(max_workers=2100)
 # 往线程池加入2个task
 def threadtest1(m):
     for i in range(10):
+        time.sleep(1)
         print(i+m)
 f1 = pool.submit(threadtest1, 0)
 f2 = pool.submit(threadtest1,100)

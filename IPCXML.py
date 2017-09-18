@@ -1,6 +1,8 @@
 import xml.etree.ElementTree as ET
 import logging
 
+
+#PLC symbol value
 class SymbolValue:
     __slots__=('symbolname', 'datatype', 'channelno', 'bitno', 'comment')
 
@@ -10,6 +12,18 @@ class SymbolValue:
         self.channelno = channelno
         self.bitno = bitno
         self.comment = comment
+
+
+#serial port setting
+class CommSetting:
+    __slots__ = ('port', 'baudrate', 'stopbit', 'parity', 'bytesize')
+
+    def __init__(self, port, baudrate, stopbit, parity, bytesize):
+        self.port = port
+        self.baudrate = baudrate
+        self.stopbit = stopbit
+        self.parity = parity
+        self.bytesize = bytesize
 
 
 class IPCXML:
@@ -39,35 +53,35 @@ class IPCXML:
         root = tree.getroot()
         info = {}
         for child in root.findall("EQUIPMENTLIST"):
-                fo = []#设备配置
-                for grandchild in child.findall("EQUIPMENT"):
-                    #PLC 通讯接口是以太网
-                    equiptype = grandchild.attrib['EQUIPMENTTYPE']
-                    equipno = grandchild.attrib['EQUIPMENTNO']
-                    if(grandchild.attrib['PLCINTERFACE'] == 'TCP'):
-                        p = {} # PLC列表
-                        for grandgrandchild in grandchild.findall('PLC_SETTING'):
-                            for grandgrandgrandchild in grandgrandchild.findall('PLC'):
-                                plcport = grandgrandgrandchild.attrib['PORT']
-                                plcip = grandgrandgrandchild.attrib['IP']
-                                plctype=grandgrandgrandchild.attrib['TYPE']
-                                plcno = grandgrandgrandchild.attrib['NO']
-                                p[plcno]=(plcport, plcip, plctype)
-                    #PLC 通讯接口是485
-                    else:
-                        pass
-                    s = {}
-                    for ggchild in grandchild.findall('COMM_SETTING'):
-                        for gggchild in ggchild.findall('SERIAL_COMM'):
-                            serialport = gggchild.attrib['PORT']
-                            serialno = gggchild.attrib['NO']
-                            serialstopbit = gggchild.attrib['STOPBIT']
-                            serialbytesize = gggchild.attrib['BYTESIZE']
-                            serialparity = gggchild.attrib['PARITY']
-                            serialbaudrate = gggchild.attrib['BAUDRATE']
-                            s[serialno]=(serialport, serialstopbit, serialbytesize, serialparity, serialbaudrate)
-                    fo = [equiptype,  p, s]
-                info[equipno] = fo
+            fo = []#设备配置
+            for grandchild in child.findall("EQUIPMENT"):
+                #PLC 通讯接口是以太网
+                equiptype = grandchild.attrib['EQUIPMENTTYPE']
+                equipno = grandchild.attrib['EQUIPMENTNO']
+                if(grandchild.attrib['PLCINTERFACE'] == 'TCP'):
+                    p = {} # PLC列表
+                    for grandgrandchild in grandchild.findall('PLC_SETTING'):
+                        for grandgrandgrandchild in grandgrandchild.findall('PLC'):
+                            plcport = grandgrandgrandchild.attrib['PORT']
+                            plcip = grandgrandgrandchild.attrib['IP']
+                            plctype=grandgrandgrandchild.attrib['TYPE']
+                            plcno = grandgrandgrandchild.attrib['NO']
+                            p[plcno]=(plcport, plcip, plctype)
+                #PLC 通讯接口是485
+                else:
+                    pass
+                s = {}
+                for ggchild in grandchild.findall('COMM_SETTING'):
+                    for gggchild in ggchild.findall('SERIAL_COMM'):
+                        serialport = gggchild.attrib['PORT']
+                        serialno = gggchild.attrib['NO']
+                        serialstopbit = gggchild.attrib['STOPBIT']
+                        serialbytesize = gggchild.attrib['BYTESIZE']
+                        serialparity = gggchild.attrib['PARITY']
+                        serialbaudrate = gggchild.attrib['BAUDRATE']
+                        s[serialno]=(serialport, serialstopbit, serialbytesize, serialparity, serialbaudrate)
+                fo = [equiptype,  p, s]
+            info[equipno] = fo
         return info
 
 
