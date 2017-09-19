@@ -1,29 +1,6 @@
 import xml.etree.ElementTree as ET
 import logging
-
-
-#PLC symbol value
-class SymbolValue:
-    __slots__=('symbolname', 'datatype', 'channelno', 'bitno', 'comment')
-
-    def __init__(self,symbolname, datatype, channelno, bitno, comment):
-        self.symbolname = symbolname
-        self.datatype = datatype
-        self.channelno = channelno
-        self.bitno = bitno
-        self.comment = comment
-
-
-#serial port setting
-class CommSetting:
-    __slots__ = ('port', 'baudrate', 'stopbit', 'parity', 'bytesize')
-
-    def __init__(self, port, baudrate, stopbit, parity, bytesize):
-        self.port = port
-        self.baudrate = baudrate
-        self.stopbit = stopbit
-        self.parity = parity
-        self.bytesize = bytesize
+import DataStruct as DS
 
 
 class IPCXML:
@@ -44,7 +21,7 @@ class IPCXML:
                     bitno = grandchild.attrib['BitNo']
                     datatype = grandchild.attrib['DataType']
                     comment = grandchild.attrib['Comment']
-                    symbol = SymbolValue(symbolename, datatype, channelno, bitno, comment)
+                    symbol = DS.SymbolValue(symbolename, datatype, channelno, bitno, comment)
                     d[symbolename] = symbol
                 break
         return d
@@ -53,12 +30,13 @@ class IPCXML:
         root = tree.getroot()
         info = {}
         for child in root.findall("EQUIPMENTLIST"):
-            fo = []#设备配置
             for grandchild in child.findall("EQUIPMENT"):
                 #PLC 通讯接口是以太网
                 equiptype = grandchild.attrib['EQUIPMENTTYPE']
                 equipno = grandchild.attrib['EQUIPMENTNO']
                 if(grandchild.attrib['PLCINTERFACE'] == 'TCP'):
+                    for grandgrandchild in grandchild.findall('IPCLOCALIP'):
+                        localip = grandgrandchild.attrib['IP']
                     p = {} # PLC列表
                     for grandgrandchild in grandchild.findall('PLC_SETTING'):
                         for grandgrandgrandchild in grandgrandchild.findall('PLC'):
@@ -66,7 +44,7 @@ class IPCXML:
                             plcip = grandgrandgrandchild.attrib['IP']
                             plctype=grandgrandgrandchild.attrib['TYPE']
                             plcno = grandgrandgrandchild.attrib['NO']
-                            p[plcno]=(plcport, plcip, plctype)
+                            p[plcno] = DS.NetworkEquipmentSetting(plcport, plcip, plctype)
                 #PLC 通讯接口是485
                 else:
                     pass
@@ -79,9 +57,8 @@ class IPCXML:
                         serialbytesize = gggchild.attrib['BYTESIZE']
                         serialparity = gggchild.attrib['PARITY']
                         serialbaudrate = gggchild.attrib['BAUDRATE']
-                        s[serialno]=(serialport, serialstopbit, serialbytesize, serialparity, serialbaudrate)
-                fo = [equiptype,  p, s]
-            info[equipno] = fo
+                        s[serialno]=DS.SerialEquipmentSetting(serialport,serialbaudrate, serialstopbit, serialparity, serialbytesize, serialno, '')
+                info[equipno] = DS.EquipmentSetting(equiptype, localip, {}, p, s)
         return info
 
 

@@ -1,9 +1,9 @@
 from PLC import *
-from IPCXML import *
 import logging
 from SqlLiteDB import *
-
-
+from IFast import *
+from DataStruct import *
+from IPCXML import *
 
 logger=logging.getLogger('main')
 logger.setLevel(logging.DEBUG)
@@ -26,4 +26,7 @@ if __name__ == '__main__':
     # p.plcclose()
     p=IPCXML()
     m=p.getequipmentinfo()
-    print('success')
+    for eqno, eqsetting in m.items():
+        i=IFast()
+        i.IFastInit(eqsetting)
+    print("SUCCESS")

@@ -1,25 +1,26 @@
 from PLC import *
 import logging
+from IPCXML import *
+import DataStruct as DS
 
-#TODO
+
 class IFast:
     def __init__(self):
-        self.logger = logging.getlogger('main.IFast')
+        self.logger = logging.getLogger('main.IFast')
         self.PLCList = {}
 
 
 
 
     def IFastInit(self,eqinfo):
-        for eq in eqinfo:
-            if isinstance(eq, str):
-                self.logger.info('equipment type is'+eq)
-            if isinstance(eq,dict):
-                for subeq in eq.items():
-                    if subeq is 'PLC':#need to rewrite
-                        p=PLC()
-                        p.plcconnect()
-        pass
+        if isinstance(eqinfo, DS.EquipmentSetting):
+            for plcname,plcsetting in eqinfo.PLCNetworkList.items():
+                i=IPCXML()
+                symbolvalue = i.getsymbolvalue(eqinfo.EquipType)
+                p=PLC(symbolvalue)
+                # p.plcconnect(eqinfo.LocalIP,plcsetting.IP, plcsetting.Port)
+            self.logger.info("IFast Init Success")
+
 
 
 

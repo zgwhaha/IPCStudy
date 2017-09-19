@@ -1,12 +1,13 @@
 import socket
 
-
 class PLC:
-    def __init__(self):
+    def __init__(self, symbolvaluelist):
         self.finsheadersa1=0
         self.finsheaderda1=0
         self.s=0
-        pass
+        self.symbolvaluelist = symbolvaluelist
+
+
 
     def plcconnect(self, localip, desip, port):
         self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

@@ -8,7 +8,7 @@ def return_future(msg):
 
 
 # 创建一个线程池
-pool = ThreadPoolExecutor(max_workers=2100)
+pool = ThreadPoolExecutor(max_workers=100)
 
 # 往线程池加入2个task
 def threadtest1(m):
